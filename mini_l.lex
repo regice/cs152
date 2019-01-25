@@ -10,7 +10,7 @@ digit    	[0-9]
 alpha	 	[a-zA-Z]
 identifier	{alpha}({alpha}|{digit})*("_"({alpha}|{digit})+)*
 number		{digit}+
-comments	"##"
+comment		"##".*"\n"
    
 %%
 
@@ -67,13 +67,13 @@ comments	"##"
 "]"		{printf("R_SQUARE_BRACKET\n"); currPos += yyleng;}
 ":="		{printf("ASSIGN\n"); currPos += yyleng;}
 
-[ \t]+         	{/* ignore spaces */ currPos += yyleng;}
+[ \t]+         	{/* Ignore spaces */ currPos += yyleng;}
 
-"\n"           {currLine++; currPos = 1;}
+"\n"           	{/* Move to next line */ currLine++; currPos = 1;}
 
-"##"		{currLine++; currPos = 1;}
+{comment}	{/* Ignore comments */ currLine++; currPos = 1;}
 
-.              {printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", currLine, currPos, yytext); exit(0);}
+.              	{printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", currLine, currPos, yytext); exit(0);}
 
 %%
 
