@@ -3,7 +3,7 @@
    /* Written by Brandon Tran */
 
 %{   
-   int currLine = 1, currPos = 1;
+   int currLine = 1, currPos = 0;
 %}
 
 digit    	[0-9]
@@ -48,7 +48,7 @@ comment		"##".*"\n"
 "/"            	{printf("DIV\n"); currPos += yyleng;}
 "%"		{printf("MOD\n"); currPos += yyleng;}
 
-"=="		{printf("EQ\n"); currPos += yyleng;}
+"=="		{printf("EQPos =\n"); currPos += yyleng;}
 "<>"		{printf("NEQ\n"); currPos += yyleng;}
 "<"		{printf("LT\n"); currPos += yyleng;}
 ">"		{printf("GT\n"); currPos += yyleng;}
@@ -69,11 +69,11 @@ comment		"##".*"\n"
 
 [ \t]+         	{/* Ignore spaces */ currPos += yyleng;}
 
-"\n"           	{/* Move to next line */ currLine++; currPos = 1;}
+"\n"           	{/* Move to next line */ currLine++; currPos = 0;}
 
-{comment}	{/* Ignore comments */ currLine++; currPos = 1;}
+{comment}	{/* Ignore comments */ currLine++; currPos = 0;}
 
-.              	{printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", currLine, currPos, yytext); exit(0);}
+.              	{printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", currLine, currPos+1, yytext); exit(0);}
 
 %%
 
