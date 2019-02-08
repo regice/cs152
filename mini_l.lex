@@ -13,7 +13,7 @@ number		{digit}+
 comment		"##".*"\n"
 
 invalid_ident_letter		({digit}|"_")({alpha}|{digit})*("_"({alpha}|{digit})+)*
-invalid_ident_underscore	{alpha}({alpha}|{digit})*("_"({alpha}|{digit})+)*"_"
+invalid_ident_underscore	{alpha}({alpha}|{digit})*("_"({alpha}|{digit})+)*"_"*
    
 %%
 
