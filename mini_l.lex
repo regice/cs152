@@ -51,7 +51,7 @@ invalid_ident_underscore	{alpha}({alpha}|{digit})*("_"({alpha}|{digit})+)*"_"*
 "/"            	{printf("DIV\n"); currPos += yyleng;}
 "%"		{printf("MOD\n"); currPos += yyleng;}
 
-"=="		{printf("EQPos =\n"); currPos += yyleng;}
+"=="		{printf("EQ\n"); currPos += yyleng;}
 "<>"		{printf("NEQ\n"); currPos += yyleng;}
 "<"		{printf("LT\n"); currPos += yyleng;}
 ">"		{printf("GT\n"); currPos += yyleng;}
