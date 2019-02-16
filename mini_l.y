@@ -3,10 +3,10 @@
    /* Written by Brandon Tran */
 
    /* References:
-	https://www.cs.ucr.edu/~amazl001/teaching/webpages2/phase2_parser.html
-	https://www.cs.ucr.edu/~amazl001/teaching/webpages2/syntax.html
-	http://alumni.cs.ucr.edu/~lgao/teaching/bison.html (bison tutorial)
-	https://www.cs.ucr.edu/~amazl001/teaching/webpages2/lab02_solution/calc.y
+	Project Spec: https://www.cs.ucr.edu/~amazl001/teaching/webpages2/phase2_parser.html
+	Syntax diagrams: https://www.cs.ucr.edu/~amazl001/teaching/webpages2/syntax.html
+	Bison tutorial: http://alumni.cs.ucr.edu/~lgao/teaching/bison.html
+	lab 2 solution (used for ref on how to write .y files): https://www.cs.ucr.edu/~amazl001/teaching/webpages2/lab02_solution/calc.y
    */
 
 %{
@@ -28,8 +28,8 @@
 %token FUNCTION 
 %token BEGIN_PARAMS END_PARAMS BEGIN_LOCALS END_LOCALS BEGIN_BODY END_BODY
 %token INTEGER ARRAY OF IF THEN ENDIF ELSE WHILE DO BEGINLOOP ENDLOOP CONTINUE READ WRITE AND OR NOT TRUE FALSE RETURN
-%token SUB ADD MULT DIV MOD
-%token EQ NEQ LT GT LTE GTE
+%left SUB ADD MULT DIV MOD
+%left EQ NEQ LT GT LTE GTE
 %token IDENT NUMBER
 %token SEMICOLON COLON COMMA L_PAREN R_PAREN L_SQUARE_BRACKET R_SQUARE_BRACKET ASSIGN
 
@@ -42,25 +42,88 @@
 
 
 %% 
-program:	function
+program:		functions
+			;
 
-function:	FUNCTION IDENT SEMICOLON BEGINPARAMS Declaration END_PARAMS BEGIN_LOCALS declaration END_LOCALS BEGIN_BODY statement END_BODY	{}
+functions:		/* empty */
+			| function functions
+			;
 
-Declaration:	/* empty */
-		| IDENT declaration
+function:		FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY	
+			;
 
-declaration:	/* empty */
-		| COMMA Declaration
-		| COLON array INTEGER SEMICOLON
+declarations:		/* empty */
+			| declaration SEMICOLON declarations
+			;
 
-array:		/* empty */
-		| ARRAY L_SQUARE_BRACKET NUMBER  R_SQUARE_BRACKET OF 
+declaration:		/* empty */
+			| identifiers COLON INTEGER
+			| identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER  R_SQUARE_BRACKET OF INTEGER
+			;
 
-Statement:	/* empty */
-		| Var ASSIGN Expression
-		| IF BoolExp THEN Statement SEMICOLON 
+statements:		/* empty */
+			| statement SEMICOLON statements
+			;
 
-identifier:	IDENT {$$ = $1 /* account for identifier string accompanying IDENT */}
+statement:		/* empty */
+			| var ASSIGN expression
+			| IF bool_exp THEN statement ELSE statement ENDIF
+			| WHILE bool_exp BEGINLOOP statement ENDLOOP
+			| DO BEGINLOOP statement ENDLOOP WHILE bool_exp
+			| READ vars
+			| CONTINUE
+			| RETURN expression
+			;
+
+bool_exp:		relation_and_exp
+			| relation_and_exp OR relation_and_exp
+			;
+
+relation_and_exp:	relation_exp
+			| relation_exp AND relation_exp
+			;
+
+relation_exp:		not expression comp expression
+			| not TRUE			
+			| not FALSE
+			| not L_PAREN bool_exp R_PAREN
+			;
+
+not:			/* empty */
+			| NOT
+			;
+
+comp:			EQ 
+			| NEQ 
+			| LT 
+			| GT 
+			| LTE 
+			| GTE
+			;
+
+expression:		mult_exp
+			| mult_exp ADD mult_exp
+			| mult_exp SUB mult_exp
+			;
+
+mult_exp:		term
+			| term MULT term
+			| term DIV term
+			| term MOD term
+			;
+
+term:			var /*include SUB in front of this production*/
+			| NUMBER /*include SUB in front of this production*/
+			| L_PAREN expression R_PAREN /*include SUB in front of this production*/
+			| identifier L_PAREN expressions R_PAREN
+
+expressions:		/* empty */
+			| expression COMMA expressions
+			;
+
+var:			
+
+identifier:	IDENT {$$ = $1 /* TO-DO: account for identifier string accompanying IDENT */}
 
 input:	
 	| input line
