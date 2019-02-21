@@ -42,88 +42,111 @@
 
 
 %% 
-program:		functions
+program:		functions {printf("program -> functions);}
 			;
 
-functions:		/* empty */
-			| function functions
+functions:		/* empty */ {printf("functions -> epsilon");}
+			| function functions {printf("functions -> function functions");}
 			;
 
-function:		FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY	
+function:		FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY {printf("function -> FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY");}
 			;
 
-declarations:		/* empty */
-			| declaration SEMICOLON declarations
+declarations:		/* empty */ {printf("declarations -> epsilon");}
+			| declaration SEMICOLON declarations {printf("declarations -> declaration SEMICOLON declarations");}
 			;
 
-declaration:		/* empty */
-			| identifiers COLON INTEGER
-			| identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER  R_SQUARE_BRACKET OF INTEGER
+declaration:		/* empty */ {printf("declaration -> epsilon");}
+			| identifiers COLON INTEGER {printf("declaration -> identifiers COLON INTEGER");}
+			| identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER {printf("declaration -> identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER");}
 			;
 
-statements:		/* empty */
-			| statement SEMICOLON statements
+statements:		/* empty */ {printf("statements -> epsilon");}
+			| statement SEMICOLON statements {printf("statements -> statement SEMICOLON statements");}
 			;
 
-statement:		/* empty */
-			| var ASSIGN expression
-			| IF bool_exp THEN statement ELSE statement ENDIF
-			| WHILE bool_exp BEGINLOOP statement ENDLOOP
-			| DO BEGINLOOP statement ENDLOOP WHILE bool_exp
-			| READ vars
-			| CONTINUE
-			| RETURN expression
+statement:		/* empty */ {printf("statement -> epsilon");}
+			| var ASSIGN expression {printf("statement -> var ASSIGN expression");}
+			| IF bool_exp THEN statement ELSE statement ENDIF {printf("statement -> IF bool_exp THEN statement ELSE statement ENDIF");}
+			| WHILE bool_exp BEGINLOOP statement ENDLOOP {printf("statement -> WHILE bool_exp BEGINLOOP statement ENDLOOP");}
+			| DO BEGINLOOP statement ENDLOOP WHILE bool_exp {printf("statement -> DO BEGINLOOP statement ENDLOOP WHILE bool_exp");}
+			| READ vars {printf("statement -> READ vars");}
+			| CONTINUE {printf("statement -> CONTINUE");}
+			| RETURN expression {printf("statement -> RETURN expression");}
 			;
 
-bool_exp:		relation_and_exp
-			| relation_and_exp OR relation_and_exp
+vars:			/* empty */ {printf("vars -> epsilon");}
+			| var {printf("vars -> var");}
+			| var COMMA vars {printf("vars -> var COMMA vars");}
 			;
 
-relation_and_exp:	relation_exp
-			| relation_exp AND relation_exp
+bool_exp:		relation_and_exp {printf("bool_exp -> relation_and_exp");}
+			| relation_and_exp OR relation_and_exp {printf("bool_exp -> relation_and_exp OR relation_and_exp");}
 			;
 
-relation_exp:		not expression comp expression
-			| not TRUE			
-			| not FALSE
-			| not L_PAREN bool_exp R_PAREN
+relation_and_exp:	relation_exp {printf("relation_and_exp -> relation_exp");}
+			| relation_exp AND relation_exp {printf("relation_and_exp -> relation_exp AND relation_exp");}
 			;
 
-not:			/* empty */
-			| NOT
+relation_exp:		not expression comp expression {printf("relation_exp -> not expression comp expression");}
+			| not TRUE {printf("relation_exp -> not TRUE);}
+			| not FALSE {printf("relation_exp -> not FALSE);}
+			| not L_PAREN bool_exp R_PAREN {printf("relation_exp -> not L_PAREN bool_exp R_PAREN");}
 			;
 
-comp:			EQ 
-			| NEQ 
-			| LT 
-			| GT 
-			| LTE 
-			| GTE
+not:			/* empty */ {printf("not -> epsilon");}
+			| NOT {printf("not -> NOT");}
 			;
 
-expression:		mult_exp
-			| mult_exp ADD mult_exp
-			| mult_exp SUB mult_exp
+comp:			EQ {printf("comp -> EQ");}
+			| NEQ {printf("comp -> NEQ");}
+			| LT  {printf("comp -> LT");}
+			| GT  {printf("comp -> GT");}
+			| LTE {printf("comp -> LTE");}
+			| GTE {printf("comp -> GTE");}
 			;
 
-mult_exp:		term
-			| term MULT term
-			| term DIV term
-			| term MOD term
+expression:		mult_exp {printf("expression -> mult_exp");}
+			| mult_exp ADD mult_exp {printf("expression -> mult_exp ADD mult_exp");}
+			| mult_exp SUB mult_exp {printf("expression -> mult_exp SUB mult_exp");}
 			;
 
-term:			var /*include SUB in front of this production*/
-			| NUMBER /*include SUB in front of this production*/
-			| L_PAREN expression R_PAREN /*include SUB in front of this production*/
-			| identifier L_PAREN expressions R_PAREN
-
-expressions:		/* empty */
-			| expression COMMA expressions
+mult_exp:		term {printf("mult_exp -> term");}
+			| term MULT term {printf("mult_exp -> term MULT term");}
+			| term DIV term {printf("mult_exp -> term DIV term");}
+			| term MOD term {printf("mult_exp -> term MOD term");}
 			;
 
-var:			
+term:			var {printf("term -> var");}
+			| NUMBER {printf("term -> NUMBER");}
+			| L_PAREN expression R_PAREN {printf("term -> L_PAREN expression R_PAREN");}
+			| U_MINUS var {printf("term -> U_MINUS var");}
+			| U_MINUS NUMBER {printf("term -> U_MINUS NUMBER");}
+			| U_MINUS L_PAREN expression R_PAREN {printf("term -> U_MINUS L_PAREN expression R_PAREN");}
+			| identifier L_PAREN expressions R_PAREN {printf("term -> identifier L_PAREN expressions R_PAREN");}
+			;
+			
 
-identifier:	IDENT {$$ = $1 /* TO-DO: account for identifier string accompanying IDENT */}
+expressions:		/* empty */ {printf("expressions -> epsilon");}
+			| expression COMMA expressions {printf("expressions -> expression COMMA expressions");}
+			;
+
+var:			identifier {printf("var -> identifier");}
+			| identifier L_SQUARE_BRACKET expression R_SQUARE_BRACKET {printf("var -> identifier L_SQUARE_BRACKET expression R_SQUARE_BRACKET");}
+			;
+
+identifiers:		identifier {printf("identifiers -> identifier");}
+			| identifier COMMA indentifiers {printf("identifiers -> identifier COMMA identifiers");}
+			;
+
+identifier:		
+
+
+
+
+
+
+
 
 input:	
 	| input line
