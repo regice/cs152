@@ -5,7 +5,8 @@
    /* MODIFIED mini_l.lex FOR USE IN PHASE 2 OF THE PROJECT. USE THIS WITH mini_l.y !!! */
 
 %{   
-   int currLine = 1, currPos = 0;
+	#include "y.tab.h"   
+	int currLine = 1, currPos = 0;
 %}
 
 digit    	[0-9]
@@ -60,8 +61,8 @@ invalid_ident_underscore	{alpha}({alpha}|{digit})*("_"({alpha}|{digit})+)*"_"*
 "<="		{currPos += yyleng; return LTE;}
 ">="		{currPos += yyleng; return GTE;}
 
-{identifier}	{currPos += yyleng; return IDENT;}
-{number}	{currPos += yyleng; return NUMBER;}
+{identifier}	{currPos += yyleng; yylval.var = (yytext); return IDENT;}
+{number}	{currPos += yyleng; yylval.intval = <int>(yytext); return NUMBER;}
 
 ";"		{currPos += yyleng; return SEMICOLON;}
 ":"		{currPos += yyleng; return COLON;}
