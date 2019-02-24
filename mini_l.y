@@ -63,86 +63,86 @@ declaration:		/* empty */ { printf("declaration -> epsilon\n"); }
 			| identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER { printf("declaration -> identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n"); }
 			;
 
-statements:		/* empty */ { printf("statements -> epsilon"); }
-			| statement SEMICOLON statements { printf("statements -> statement SEMICOLON statements"); }
+statements:		/* empty */ { printf("statements -> epsilon\n"); }
+			| statement SEMICOLON statements { printf("statements -> statement SEMICOLON statements\n"); }
 			;
 
-statement:		/* empty */ { printf("statement -> epsilon"); }
-			| var ASSIGN expression { printf("statement -> var ASSIGN expression"); }
-			| IF bool_exp THEN statements ELSE statements ENDIF { printf("statement -> IF bool_exp THEN statements ELSE statements ENDIF"); }
-			| IF bool_exp THEN statements ENDIF { printf("statement -> IF bool_exp THEN statements ENDIF"); }
-			| WHILE bool_exp BEGINLOOP statements ENDLOOP { printf("statement -> WHILE bool_exp BEGINLOOP statements ENDLOOP"); }
-			| DO BEGINLOOP statements ENDLOOP WHILE bool_exp { printf("statement -> DO BEGINLOOP statements ENDLOOP WHILE bool_exp"); }
-			| READ vars { printf("statement -> READ vars"); }
-			| WRITE vars { printf("statement -> WRITE vars"); }
-			| CONTINUE { printf("statement -> CONTINUE"); }
-			| RETURN expression { printf("statement -> RETURN expression"); }
+statement:		/* empty */ { printf("statement -> epsilon\n"); }
+			| var ASSIGN expression { printf("statement -> var ASSIGN expression\n"); }
+			| IF bool_exp THEN statements ELSE statements ENDIF { printf("statement -> IF bool_exp THEN statements ELSE statements ENDIF\n"); }
+			| IF bool_exp THEN statements ENDIF { printf("statement -> IF bool_exp THEN statements ENDIF\n"); }
+			| WHILE bool_exp BEGINLOOP statements ENDLOOP { printf("statement -> WHILE bool_exp BEGINLOOP statements ENDLOOP\n"); }
+			| DO BEGINLOOP statements ENDLOOP WHILE bool_exp { printf("statement -> DO BEGINLOOP statements ENDLOOP WHILE bool_exp\n"); }
+			| READ vars { printf("statement -> READ vars\n"); }
+			| WRITE vars { printf("statement -> WRITE vars\n"); }
+			| CONTINUE { printf("statement -> CONTINUE\n"); }
+			| RETURN expression { printf("statement -> RETURN expression\n"); }
 			;
 
-vars:			/* empty */ { printf("vars -> epsilon"); }
-			| var { printf("vars -> var"); }
-			| var COMMA vars { printf("vars -> var COMMA vars"); }
+vars:			/* empty */ { printf("vars -> epsilon\n"); }
+			| var { printf("vars -> var\n"); }
+			| var COMMA vars { printf("vars -> var COMMA vars\n"); }
 			;
 
-bool_exp:		relation_and_exp { printf("bool_exp -> relation_and_exp"); }
-			| relation_and_exp OR relation_and_exp { printf("bool_exp -> relation_and_exp OR relation_and_exp"); }
+bool_exp:		relation_and_exp { printf("bool_exp -> relation_and_exp\n"); }
+			| relation_and_exp OR relation_and_exp { printf("bool_exp -> relation_and_exp OR relation_and_exp\n"); }
 			;
 
-relation_and_exp:	relation_exp { printf("relation_and_exp -> relation_exp"); }
-			| relation_exp AND relation_exp { printf("relation_and_exp -> relation_exp AND relation_exp"); }
+relation_and_exp:	relation_exp { printf("relation_and_exp -> relation_exp\n"); }
+			| relation_exp AND relation_exp { printf("relation_and_exp -> relation_exp AND relation_exp\n"); }
 			;
 
-relation_exp:		expression comp expression { printf("relation_exp -> expression comp expression"); }
-			| TRUE { printf("relation_exp -> TRUE"); }
-			| FALSE { printf("relation_exp -> FALSE"); }
-			| L_PAREN bool_exp R_PAREN { printf("relation_exp -> L_PAREN bool_exp R_PAREN"); }
-			| NOT expression comp expression { printf("relation_exp -> NOT expression comp expression"); }
-			| NOT TRUE { printf("relation_exp -> NOT TRUE"); }
-			| NOT FALSE { printf("relation_exp -> NOT FALSE"); }
-			| NOT L_PAREN bool_exp R_PAREN { printf("relation_exp -> NOT L_PAREN bool_exp R_PAREN"); }
+relation_exp:		expression comp expression { printf("relation_exp -> expression comp expression\n"); }
+			| TRUE { printf("relation_exp -> TRUE\n"); }
+			| FALSE { printf("relation_exp -> FALSE\n"); }
+			| L_PAREN bool_exp R_PAREN { printf("relation_exp -> L_PAREN bool_exp R_PAREN\n"); }
+			| NOT expression comp expression { printf("relation_exp -> NOT expression comp expression\n"); }
+			| NOT TRUE { printf("relation_exp -> NOT TRUE\n"); }
+			| NOT FALSE { printf("relation_exp -> NOT FALSE\n"); }
+			| NOT L_PAREN bool_exp R_PAREN { printf("relation_exp -> NOT L_PAREN bool_exp R_PAREN\n"); }
 			;
 
-comp:			EQ { printf("comp -> EQ"); }
-			| NEQ { printf("comp -> NEQ"); }
-			| LT  { printf("comp -> LT"); }
-			| GT  { printf("comp -> GT"); }
-			| LTE { printf("comp -> LTE"); }
-			| GTE { printf("comp -> GTE"); }
+comp:			EQ { printf("comp -> EQ\n"); }
+			| NEQ { printf("comp -> NEQ\n"); }
+			| LT  { printf("comp -> LT\n"); }
+			| GT  { printf("comp -> GT\n"); }
+			| LTE { printf("comp -> LTE\n"); }
+			| GTE { printf("comp -> GTE\n"); }
 			;
 
-expression:		mult_exp { printf("expression -> mult_exp"); }
-			| mult_exp ADD mult_exp { printf("expression -> mult_exp ADD mult_exp"); }
-			| mult_exp SUB mult_exp { printf("expression -> mult_exp SUB mult_exp"); }
+expression:		mult_exp { printf("expression -> mult_exp\n"); }
+			| mult_exp ADD mult_exp { printf("expression -> mult_exp ADD mult_exp\n"); }
+			| mult_exp SUB mult_exp { printf("expression -> mult_exp SUB mult_exp\n"); }
 			;
 
-mult_exp:		term { printf("mult_exp -> term"); }
-			| term MULT term { printf("mult_exp -> term MULT term"); }
-			| term DIV term { printf("mult_exp -> term DIV term"); }
-			| term MOD term { printf("mult_exp -> term MOD term"); }
+mult_exp:		term { printf("mult_exp -> term\n"); }
+			| term MULT term { printf("mult_exp -> term MULT term\n"); }
+			| term DIV term { printf("mult_exp -> term DIV term\n"); }
+			| term MOD term { printf("mult_exp -> term MOD term\n"); }
 			;
 
-term:			var { printf("term -> var"); }
-			| NUMBER { printf("term -> NUMBER"); }
-			| L_PAREN expression R_PAREN { printf("term -> L_PAREN expression R_PAREN"); }
-			| U_MINUS var { printf("term -> U_MINUS var"); }
-			| U_MINUS NUMBER { printf("term -> U_MINUS NUMBER"); }
-			| U_MINUS L_PAREN expression R_PAREN { printf("term -> U_MINUS L_PAREN expression R_PAREN"); }
-			| identifier L_PAREN expressions R_PAREN { printf("term -> identifier L_PAREN expressions R_PAREN"); }
+term:			var { printf("term -> var\n"); }
+			| NUMBER { printf("term -> NUMBER\n"); }
+			| L_PAREN expression R_PAREN { printf("term -> L_PAREN expression R_PAREN\n"); }
+			| U_MINUS var { printf("term -> U_MINUS var\n"); }
+			| U_MINUS NUMBER { printf("term -> U_MINUS NUMBER\n"); }
+			| U_MINUS L_PAREN expression R_PAREN { printf("term -> U_MINUS L_PAREN expression R_PAREN\n"); }
+			| identifier L_PAREN expressions R_PAREN { printf("term -> identifier L_PAREN expressions R_PAREN\n"); }
 			;
 
-expressions:		/* empty */ { printf("expressions -> epsilon"); }
-			| expression COMMA expressions { printf("expressions -> expression COMMA expressions"); }
+expressions:		/* empty */ { printf("expressions -> epsilon\n"); }
+			| expression COMMA expressions { printf("expressions -> expression COMMA expressions\n"); }
 			;
 
-var:			identifier { printf("var -> identifier"); }
-			| identifier L_SQUARE_BRACKET expression R_SQUARE_BRACKET { printf("var -> identifier L_SQUARE_BRACKET expression R_SQUARE_BRACKET"); }
+var:			identifier { printf("var -> identifier\n"); }
+			| identifier L_SQUARE_BRACKET expression R_SQUARE_BRACKET { printf("var -> identifier L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n"); }
 			;
 
-identifiers:		identifier { printf("identifiers -> identifier"); }
-			| identifier COMMA identifiers { printf("identifiers -> identifier COMMA identifiers"); }
+identifiers:		identifier { printf("identifiers -> identifier\n"); }
+			| identifier COMMA identifiers { printf("identifiers -> identifier COMMA identifiers\n"); }
 			;
 
-identifier:		IDENT { printf("identifier -> IDENT %s", yylval.var); }
+identifier:		IDENT { printf("identifier -> IDENT %s\n", yylval.var); }
 			;
 
 
