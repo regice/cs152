@@ -5,7 +5,7 @@
    /* MODIFIED mini_l.lex FOR USE IN PHASE 2 OF THE PROJECT. USE THIS WITH mini_l.y !!! */
 
 %{   
-	#include "y.tab.h"   
+   #include "y.tab.h"   
 	int currLine = 1, currPos = 0;
 %}
 
@@ -62,7 +62,7 @@ invalid_ident_underscore	{alpha}({alpha}|{digit})*("_"({alpha}|{digit})+)*"_"*
 ">="		{currPos += yyleng; return GTE;}
 
 {identifier}	{currPos += yyleng; yylval.var = (yytext); return IDENT;}
-{number}	{currPos += yyleng; yylval.intval = <int>(yytext); return NUMBER;}
+{number}	{currPos += yyleng; yylval.intval = atoi(yytext); return NUMBER;}
 
 ";"		{currPos += yyleng; return SEMICOLON;}
 ":"		{currPos += yyleng; return COLON;}
@@ -86,7 +86,7 @@ invalid_ident_underscore	{alpha}({alpha}|{digit})*("_"({alpha}|{digit})+)*"_"*
 .              	{printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", currLine, currPos+yyleng, yytext); exit(0);}
 
 %%
-
+/*
 int main(int argc, char ** argv)
 {
    if(argc >= 2)
@@ -105,3 +105,4 @@ int main(int argc, char ** argv)
    yylex();
 }
 
+*/

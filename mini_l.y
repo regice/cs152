@@ -12,6 +12,7 @@
 %{
  #include <stdio.h>
  #include <stdlib.h>
+ int yylex();
  void yyerror(const char *msg);
  extern int currLine;
  extern int currPos;
@@ -19,7 +20,7 @@
 %}
 
 %union{
-  string var;
+  char* var;
   int intval;
 }
 
