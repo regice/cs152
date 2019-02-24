@@ -44,23 +44,23 @@
 %left L_PAREN R_PAREN 
 
 %% 
-program:		functions { printf("program -> functions"); }
+program:		functions { printf("program -> functions\n"); }
 			;
 
-functions:		/* empty */ { printf("functions -> epsilon"); }
-			| function functions { printf("functions -> function functions"); }
+functions:		/* empty */ { printf("functions -> epsilon\n"); }
+			| function functions { printf("functions -> function functions\n"); }
 			;
 
-function:		FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY { printf("function -> FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY"); }
+function:		FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY { printf("function -> FUNCTION IDENT SEMICOLON BEGIN_PARAMS declarations END_PARAMS BEGIN_LOCALS declarations END_LOCALS BEGIN_BODY statements END_BODY\n"); }
 			;
 
-declarations:		/* empty */ { printf("declarations -> epsilon"); }
-			| declaration SEMICOLON declarations { printf("declarations -> declaration SEMICOLON declarations"); }
+declarations:		/* empty */ { printf("declarations -> epsilon\n"); }
+			| declaration SEMICOLON declarations { printf("declarations -> declaration SEMICOLON declarations\n"); }
 			;
 
-declaration:		/* empty */ { printf("declaration -> epsilon"); }
-			| identifiers COLON INTEGER { printf("declaration -> identifiers COLON INTEGER"); }
-			| identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER { printf("declaration -> identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER"); }
+declaration:		/* empty */ { printf("declaration -> epsilon\n"); }
+			| identifiers COLON INTEGER { printf("declaration -> identifiers COLON INTEGER\n"); }
+			| identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER { printf("declaration -> identifiers COLON ARRAY L_SQUARE_BRACKET NUMBER R_SQUARE_BRACKET OF INTEGER\n"); }
 			;
 
 statements:		/* empty */ { printf("statements -> epsilon"); }
