@@ -85,11 +85,11 @@ vars:			/* empty */ { printf("vars -> epsilon\n"); }
 			;
 
 bool_exp:		relation_and_exp { printf("bool_exp -> relation_and_exp\n"); }
-			| relation_and_exp OR relation_and_exp { printf("bool_exp -> relation_and_exp OR relation_and_exp\n"); }
+			| relation_and_exp OR bool_exp { printf("bool_exp -> relation_and_exp OR bool_exp\n"); }
 			;
 
 relation_and_exp:	relation_exp { printf("relation_and_exp -> relation_exp\n"); }
-			| relation_exp AND relation_exp { printf("relation_and_exp -> relation_exp AND relation_exp\n"); }
+			| relation_exp AND relation_and_exp { printf("relation_and_exp -> relation_exp AND relation_and_exp\n"); }
 			;
 
 relation_exp:		expression comp expression { printf("relation_exp -> expression comp expression\n"); }
@@ -111,14 +111,14 @@ comp:			EQ { printf("comp -> EQ\n"); }
 			;
 
 expression:		mult_exp { printf("expression -> mult_exp\n"); }
-			| mult_exp ADD mult_exp { printf("expression -> mult_exp ADD mult_exp\n"); }
-			| mult_exp SUB mult_exp { printf("expression -> mult_exp SUB mult_exp\n"); }
+			| mult_exp ADD expression { printf("expression -> mult_exp ADD expression\n"); }
+			| mult_exp SUB expression { printf("expression -> mult_exp SUB expression\n"); }
 			;
 
 mult_exp:		term { printf("mult_exp -> term\n"); }
-			| term MULT term { printf("mult_exp -> term MULT term\n"); }
-			| term DIV term { printf("mult_exp -> term DIV term\n"); }
-			| term MOD term { printf("mult_exp -> term MOD term\n"); }
+			| term MULT mult_exp { printf("mult_exp -> term MULT mult_exp\n"); }
+			| term DIV mult_exp { printf("mult_exp -> term DIV mult_exp\n"); }
+			| term MOD mult_exp { printf("mult_exp -> term MOD mult_exp\n"); }
 			;
 
 term:			var { printf("term -> var\n"); }
@@ -131,6 +131,7 @@ term:			var { printf("term -> var\n"); }
 			;
 
 expressions:		/* empty */ { printf("expressions -> epsilon\n"); }
+			| expression { printf("expressions -> expression\n"); }
 			| expression COMMA expressions { printf("expressions -> expression COMMA expressions\n"); }
 			;
 
