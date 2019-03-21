@@ -1,12 +1,9 @@
-   /* CS152 Project Phase 2: Parser Generation Using bison */
-   /* The grammar for the MINI-L language */
+   /* CS152 Project Phase 3: Code Generation */
+   /* The grammar for the MINI-L language with intermediate code */
    /* Written by Brandon Tran */
 
    /* References:
-	Project Spec: https://www.cs.ucr.edu/~amazl001/teaching/webpages2/phase2_parser.html
-	Syntax diagrams: https://www.cs.ucr.edu/~amazl001/teaching/webpages2/syntax.html
-	Bison tutorial: http://alumni.cs.ucr.edu/~lgao/teaching/bison.html
-	lab 2 solution (used for ref on how to write .y files): https://www.cs.ucr.edu/~amazl001/teaching/webpages2/lab02_solution/calc.y
+	Project Spec: https://www.cs.ucr.edu/~amazl001/teaching/webpages3/phase3_code_generator.html
    */
 
 %{
@@ -80,70 +77,70 @@ statement:		/* empty */ {  }
 			;
 
 vars:			/* empty */ {  }
-			| var { printf("vars -> var\n"); }
-			| var COMMA vars { printf("vars -> var COMMA vars\n"); }
+			| var {  }
+			| var COMMA vars {  }
 			;
 
-bool_exp:		relation_and_exp { printf("bool_exp -> relation_and_exp\n"); }
-			| relation_and_exp OR bool_exp { printf("bool_exp -> relation_and_exp OR bool_exp\n"); }
+bool_exp:		relation_and_exp {  }
+			| relation_and_exp OR bool_exp {  }
 			;
 
-relation_and_exp:	relation_exp { printf("relation_and_exp -> relation_exp\n"); }
-			| relation_exp AND relation_and_exp { printf("relation_and_exp -> relation_exp AND relation_and_exp\n"); }
+relation_and_exp:	relation_exp {  }
+			| relation_exp AND relation_and_exp {  }
 			;
 
-relation_exp:		expression comp expression { printf("relation_exp -> expression comp expression\n"); }
-			| TRUE { printf("relation_exp -> TRUE\n"); }
-			| FALSE { printf("relation_exp -> FALSE\n"); }
-			| L_PAREN bool_exp R_PAREN { printf("relation_exp -> L_PAREN bool_exp R_PAREN\n"); }
-			| NOT expression comp expression { printf("relation_exp -> NOT expression comp expression\n"); }
-			| NOT TRUE { printf("relation_exp -> NOT TRUE\n"); }
-			| NOT FALSE { printf("relation_exp -> NOT FALSE\n"); }
-			| NOT L_PAREN bool_exp R_PAREN { printf("relation_exp -> NOT L_PAREN bool_exp R_PAREN\n"); }
+relation_exp:		expression comp expression {  }
+			| TRUE {  }
+			| FALSE {  }
+			| L_PAREN bool_exp R_PAREN {  }
+			| NOT expression comp expression {  }
+			| NOT TRUE {  }
+			| NOT FALSE {  }
+			| NOT L_PAREN bool_exp R_PAREN {  }
 			;
 
-comp:			EQ { printf("comp -> EQ\n"); }
-			| NEQ { printf("comp -> NEQ\n"); }
-			| LT  { printf("comp -> LT\n"); }
-			| GT  { printf("comp -> GT\n"); }
-			| LTE { printf("comp -> LTE\n"); }
-			| GTE { printf("comp -> GTE\n"); }
+comp:			EQ {  }
+			| NEQ {  }
+			| LT  {  }
+			| GT  {  }
+			| LTE {  }
+			| GTE {  }
 			;
 
-expression:		mult_exp { printf("expression -> mult_exp\n"); }
-			| mult_exp ADD expression { printf("expression -> mult_exp ADD expression\n"); }
-			| mult_exp SUB expression { printf("expression -> mult_exp SUB expression\n"); }
+expression:		mult_exp {  }
+			| mult_exp ADD expression {  }
+			| mult_exp SUB expression {  }
 			;
 
-mult_exp:		term { printf("mult_exp -> term\n"); }
-			| term MULT mult_exp { printf("mult_exp -> term MULT mult_exp\n"); }
-			| term DIV mult_exp { printf("mult_exp -> term DIV mult_exp\n"); }
-			| term MOD mult_exp { printf("mult_exp -> term MOD mult_exp\n"); }
+mult_exp:		term {  }
+			| term MULT mult_exp {  }
+			| term DIV mult_exp {  }
+			| term MOD mult_exp {  }
 			;
 
-term:			var { printf("term -> var\n"); }
-			| NUMBER { printf("term -> NUMBER\n"); }
-			| L_PAREN expression R_PAREN { printf("term -> L_PAREN expression R_PAREN\n"); }
-			| U_MINUS var { printf("term -> U_MINUS var\n"); }
-			| U_MINUS NUMBER { printf("term -> U_MINUS NUMBER\n"); }
-			| U_MINUS L_PAREN expression R_PAREN { printf("term -> U_MINUS L_PAREN expression R_PAREN\n"); }
-			| identifier L_PAREN expressions R_PAREN { printf("term -> identifier L_PAREN expressions R_PAREN\n"); }
+term:			var {  }
+			| NUMBER {  }
+			| L_PAREN expression R_PAREN {  }
+			| U_MINUS var {  }
+			| U_MINUS NUMBER {  }
+			| U_MINUS L_PAREN expression R_PAREN {  }
+			| identifier L_PAREN expressions R_PAREN {  }
 			;
 
-expressions:		/* empty */ { printf("expressions -> epsilon\n"); }
-			| expression { printf("expressions -> expression\n"); }
-			| expression COMMA expressions { printf("expressions -> expression COMMA expressions\n"); }
+expressions:		/* empty */ {  }
+			| expression {  }
+			| expression COMMA expressions {  }
 			;
 
-var:			identifier { printf("var -> identifier\n"); }
-			| identifier L_SQUARE_BRACKET expression R_SQUARE_BRACKET { printf("var -> identifier L_SQUARE_BRACKET expression R_SQUARE_BRACKET\n"); }
+var:			identifier {  }
+			| identifier L_SQUARE_BRACKET expression R_SQUARE_BRACKET {  }
 			;
 
-identifiers:		identifier { printf("identifiers -> identifier\n"); }
-			| identifier COMMA identifiers { printf("identifiers -> identifier COMMA identifiers\n"); }
+identifiers:		identifier {  }
+			| identifier COMMA identifiers {  }
 			;
 
-identifier:		IDENT { printf("identifier -> IDENT %s\n", yylval.var); }
+identifier:		IDENT {  }
 			;
 
 
