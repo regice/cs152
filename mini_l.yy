@@ -46,9 +46,7 @@ yy::parser::symbol_type yylex();
 %token END 0 "end of file";
 
 	/* specify tokens, type of non-terminals and terminals here */
-%token FUNCTION
 
-%error-verbose
 %start program
 %token FUNCTION 
 %token BEGIN_PARAMS END_PARAMS BEGIN_LOCALS END_LOCALS BEGIN_BODY END_BODY

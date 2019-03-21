@@ -2,6 +2,9 @@
 #include <iostream>
 #define YY_DECL yy::parser::symbol_type yylex()
 #include "parser.tab.hh"
+int currLine = 1, currPos = 0;
+
+static yy::location loc;
 %}
 
 %option noyywrap 
@@ -83,8 +86,8 @@ function       {return yy::parser::make_FUNCTION(loc);}
 "<="		{currPos += yyleng; return yy::parser::make_LTE(loc);}
 ">="		{currPos += yyleng; return yy::parser::make_GTE(loc);}
 
-{identifier}	{currPos += yyleng; yylval.var = (yytext); return yy::parser::make_IDENT(yylval.var, loc);}
-{number}	{currPos += yyleng; yylval.intval = atoi(yytext); return yy::parser::make_NUMBER(yylval.intval, loc);}
+{identifier}	{currPos += yyleng; return yy::parser::make_IDENT(loc);}
+{number}	{currPos += yyleng; return yy::parser::make_NUMBER(loc);}
 
 ";"		{currPos += yyleng; return yy::parser::make_SEMICOLON(loc);}
 ":"		{currPos += yyleng; return yy::parser::make_COLON(loc);}
