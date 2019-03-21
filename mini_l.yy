@@ -70,8 +70,6 @@ yy::parser::symbol_type yylex();
 
 %%
 
-%start program;
-
 	/* define your grammars here use the same grammars 
 	 * you used Phase 2 and modify their actions to generate codes
 	 * assume that your grammars start with prog_start
